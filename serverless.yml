@@ -1,0 +1,26 @@
+service: sls-call-email-gc
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-2'}
+  memorySize: 128
+  timeout: 3
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 'sns:Publish'
+      Resource:
+        - arn:aws:sns:us-east-2:268769556228:send-email/*
+
+functions:
+  index:
+    handler: index.handle
+    description: send email
+    timeout: 8
+    events:
+      - http:
+          path: /
+          method: post
+          cors: false
