@@ -2,12 +2,12 @@ const AWS = require('aws-sdk');
 
 module.exports.handle = async (event) => {
     const publishObject = {
-        email: "glauber17230@gmail.com",
-        password: "102030"
+        email: process.env.EMAIL,
+        password: process.env.PASSWORD
     }
     const params = {
-        TopicArn: 'arn:aws:sns:us-east-2:268769556228:send-email',
-        Message: `{"email": "glauber17230@gmail.com", "password": "102030"}`,
+        TopicArn: process.env.TOPIC_ARN,
+        Message: `OLÁ O EMAIL CHEGOU`,
     }
 
     var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
